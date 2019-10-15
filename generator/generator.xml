@@ -24,9 +24,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.9.191:3306/statistic_tool?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
-                        userId="platon"
-                        password="platon"/>
+                        connectionURL="jdbc:mysql://192.168.16.171:3306/platon_browser_0.7.0_test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+                        userId="root"
+                        password="Juzhen123!"/>
 
         <javaModelGenerator targetPackage="com.platon.statistic.dao.entity" targetProject="../common/src/main/java">
             <property name="enableSubPackages" value="true"/>
@@ -131,10 +131,25 @@
             <columnRenamingRule searchString="^D_"
                                 replaceString=""/>
         </table>-->
-        <table tableName="node" domainObjectName="Node">
+        <table tableName="sta_base" domainObjectName="StaBase">
             <columnRenamingRule searchString="^D_"
                                 replaceString=""/>
         </table>
-
+        <table tableName="sta_file" domainObjectName="StaFile">
+            <columnRenamingRule searchString="^D_"
+                                replaceString=""/>
+        </table>
+        <table tableName="sta_integral" domainObjectName="StaIntegral">
+            <columnRenamingRule searchString="^D_"
+                                replaceString=""/>
+        </table>
+        <table tableName="sta_opt" domainObjectName="StaOpt">
+            <columnRenamingRule searchString="^D_"
+                                replaceString=""/>
+        </table>
+        <table tableName="sta_sign" domainObjectName="StaSign">
+            <columnRenamingRule searchString="^D_"
+                                replaceString=""/>
+        </table>
     </context>
 </generatorConfiguration>

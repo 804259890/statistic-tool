@@ -3,7 +3,7 @@ package com.platon.statistic.cmd;
 import com.alibaba.fastjson.JSON;
 import com.beust.jcommander.JCommander;
 import com.google.common.collect.Sets;
-import com.platon.statistic.arg.Param;
+import com.platon.statistic.arg.Params;
 import com.platon.statistic.service.BlockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class CmdRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Param param = parseArgs(args);
+        Params param = parseArgs(args);
         log.info("命令行参数: {}", JSON.toJSONString(param,true));
         blockService.init(param);
         while (true) {
@@ -34,8 +34,8 @@ public class CmdRunner implements CommandLineRunner {
         }
     }
 
-    private Param parseArgs(String[] cliArgs) {
-        Param param = new Param();
+    private Params parseArgs(String[] cliArgs) {
+        Params param = new Params();
         JCommander jc = JCommander.newBuilder().addObject(param).build();
         jc.setProgramName("java -jar statistic.jar");
         try {

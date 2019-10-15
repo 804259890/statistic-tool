@@ -1,3 +1,5 @@
 rootProject.name = 'statistic-tool'
 include 'generator'
 include 'statistic'
+include 'common'
+include 'api'

@@ -28,18 +28,18 @@
                         userId="platon"
                         password="platon"/>
 
-        <javaModelGenerator targetPackage="com.platon.statistic.dao.entity" targetProject="../statistic/src/main/java">
+        <javaModelGenerator targetPackage="com.platon.statistic.dao.entity" targetProject="../common/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper"
-                         targetProject="../statistic/src/main/resources">
+                         targetProject="../common/src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator targetPackage="com.platon.statistic.dao.mapper"
-                             targetProject="../statistic/src/main/java" type="XMLMAPPER">
+                             targetProject="../common/src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
         <!--      <table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"

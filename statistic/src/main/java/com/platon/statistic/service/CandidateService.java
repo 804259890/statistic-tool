@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.platon.statistic.config.BlockChainConfig;
 import com.platon.statistic.excption.CandidateException;
 import com.platon.statistic.util.PlatOnClient;
-import com.platon.statistic.util.SpecialContractApi;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,6 @@ public class CandidateService {
     private BlockChainConfig chainConfig;
     @Autowired
     private PlatOnClient client;
-    @Autowired
-    private SpecialContractApi sca;
 
     private static final String ERR_MSG="睡眠被中断";
 
@@ -48,7 +45,7 @@ public class CandidateService {
         List<Node> nodes = new ArrayList<>();
         // ==================================更新当前周期验证人列表=======================================
         while (true) try {
-            nodes = sca.getHistoryVerifierList(client.getWeb3j(), blockNumber);
+            nodes = client.getHistoryVerifierList(blockNumber);
             String msg = JSON.toJSONString(nodes, true);
             logger.debug("当前结算周期验证人(块:{}):{}", blockNumber, msg);
             break;
@@ -79,7 +76,7 @@ public class CandidateService {
         // ==================================更新当前周期验证人列表=======================================
         List<Node> nodes = new ArrayList<>();
         while (true) try {
-            nodes = sca.getHistoryValidatorList(client.getWeb3j(), blockNumber);
+            nodes = client.getHistoryValidatorList(blockNumber);
             String msg = JSON.toJSONString(nodes, true);
             logger.debug("当前共识周期验证人(始块:{}):{}", blockNumber, msg);
             break;

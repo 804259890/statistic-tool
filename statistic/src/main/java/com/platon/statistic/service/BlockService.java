@@ -1,6 +1,6 @@
 package com.platon.statistic.service;
 
-import com.platon.statistic.arg.Param;
+import com.platon.statistic.arg.Params;
 import com.platon.statistic.bean.StatisticNode;
 import com.platon.statistic.cache.NodeCache;
 import com.platon.statistic.dao.mapper.CustomNodeMapper;
@@ -61,7 +61,7 @@ public class BlockService {
     @Value("${platon.web3j.collect.batch-size}")
     private int collectBatchSize;
 
-    public void init(Param param) throws CandidateException, InterruptedException {
+    public void init(Params param) throws CandidateException, InterruptedException {
         statisticService.setNeedInit(true);
         statisticService.init(param);
         statisticService.epochChange(commitBlockNumber);

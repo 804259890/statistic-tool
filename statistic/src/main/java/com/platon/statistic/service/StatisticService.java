@@ -1,6 +1,6 @@
 package com.platon.statistic.service;
 
-import com.platon.statistic.arg.Param;
+import com.platon.statistic.arg.Params;
 import com.platon.statistic.bean.PrepareQC;
 import com.platon.statistic.bean.StatisticNode;
 import com.platon.statistic.cache.NodeCache;
@@ -59,8 +59,8 @@ public class StatisticService {
     }
 
 
-    private Param param;
-    public void init(Param param) {
+    private Params param;
+    public void init(Params param) {
         this.param = param;
     }
 

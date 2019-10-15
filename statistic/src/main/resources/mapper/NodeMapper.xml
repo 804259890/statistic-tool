@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platon.statistic.dao.mapper.NodeMapper">
+  <resultMap id="BaseResultMap" type="com.platon.statistic.dao.entity.Node">
+    <id column="block_number" jdbcType="BIGINT" property="blockNumber" />
+    <id column="node_id" jdbcType="VARCHAR" property="nodeId" />
+    <result column="sign_count" jdbcType="BIGINT" property="signCount" />
+    <result column="settle_epoch" jdbcType="INTEGER" property="settleEpoch" />
+    <result column="consensus_epoch" jdbcType="INTEGER" property="consensusEpoch" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="stat_validator_time" jdbcType="INTEGER" property="statValidatorTime" />
+    <result column="sign_rate" jdbcType="DOUBLE" property="signRate" />
+    <result column="block_timestamp" jdbcType="BIGINT" property="blockTimestamp" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    block_number, node_id, sign_count, settle_epoch, consensus_epoch, create_time, update_time, 
+    stat_validator_time, sign_rate, block_timestamp
+  </sql>
+  <select id="selectByExample" parameterType="com.platon.statistic.dao.entity.NodeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from node
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.platon.statistic.dao.entity.NodeKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where block_number = #{blockNumber,jdbcType=BIGINT}
+      and node_id = #{nodeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.platon.statistic.dao.entity.NodeKey">
+    delete from node
+    where block_number = #{blockNumber,jdbcType=BIGINT}
+      and node_id = #{nodeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.platon.statistic.dao.entity.NodeExample">
+    delete from node
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.platon.statistic.dao.entity.Node">
+    insert into node (block_number, node_id, sign_count, 
+      settle_epoch, consensus_epoch, create_time, 
+      update_time, stat_validator_time, sign_rate, 
+      block_timestamp)
+    values (#{blockNumber,jdbcType=BIGINT}, #{nodeId,jdbcType=VARCHAR}, #{signCount,jdbcType=BIGINT}, 
+      #{settleEpoch,jdbcType=INTEGER}, #{consensusEpoch,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{statValidatorTime,jdbcType=INTEGER}, #{signRate,jdbcType=DOUBLE}, 
+      #{blockTimestamp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.platon.statistic.dao.entity.Node">
+    insert into node
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blockNumber != null">
+        block_number,
+      </if>
+      <if test="nodeId != null">
+        node_id,
+      </if>
+      <if test="signCount != null">
+        sign_count,
+      </if>
+      <if test="settleEpoch != null">
+        settle_epoch,
+      </if>
+      <if test="consensusEpoch != null">
+        consensus_epoch,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="statValidatorTime != null">
+        stat_validator_time,
+      </if>
+      <if test="signRate != null">
+        sign_rate,
+      </if>
+      <if test="blockTimestamp != null">
+        block_timestamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blockNumber != null">
+        #{blockNumber,jdbcType=BIGINT},
+      </if>
+      <if test="nodeId != null">
+        #{nodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="signCount != null">
+        #{signCount,jdbcType=BIGINT},
+      </if>
+      <if test="settleEpoch != null">
+        #{settleEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="consensusEpoch != null">
+        #{consensusEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statValidatorTime != null">
+        #{statValidatorTime,jdbcType=INTEGER},
+      </if>
+      <if test="signRate != null">
+        #{signRate,jdbcType=DOUBLE},
+      </if>
+      <if test="blockTimestamp != null">
+        #{blockTimestamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.platon.statistic.dao.entity.NodeExample" resultType="java.lang.Long">
+    select count(*) from node
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update node
+    <set>
+      <if test="record.blockNumber != null">
+        block_number = #{record.blockNumber,jdbcType=BIGINT},
+      </if>
+      <if test="record.nodeId != null">
+        node_id = #{record.nodeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signCount != null">
+        sign_count = #{record.signCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.settleEpoch != null">
+        settle_epoch = #{record.settleEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="record.consensusEpoch != null">
+        consensus_epoch = #{record.consensusEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statValidatorTime != null">
+        stat_validator_time = #{record.statValidatorTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.signRate != null">
+        sign_rate = #{record.signRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.blockTimestamp != null">
+        block_timestamp = #{record.blockTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update node
+    set block_number = #{record.blockNumber,jdbcType=BIGINT},
+      node_id = #{record.nodeId,jdbcType=VARCHAR},
+      sign_count = #{record.signCount,jdbcType=BIGINT},
+      settle_epoch = #{record.settleEpoch,jdbcType=INTEGER},
+      consensus_epoch = #{record.consensusEpoch,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      stat_validator_time = #{record.statValidatorTime,jdbcType=INTEGER},
+      sign_rate = #{record.signRate,jdbcType=DOUBLE},
+      block_timestamp = #{record.blockTimestamp,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.platon.statistic.dao.entity.Node">
+    update node
+    <set>
+      <if test="signCount != null">
+        sign_count = #{signCount,jdbcType=BIGINT},
+      </if>
+      <if test="settleEpoch != null">
+        settle_epoch = #{settleEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="consensusEpoch != null">
+        consensus_epoch = #{consensusEpoch,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statValidatorTime != null">
+        stat_validator_time = #{statValidatorTime,jdbcType=INTEGER},
+      </if>
+      <if test="signRate != null">
+        sign_rate = #{signRate,jdbcType=DOUBLE},
+      </if>
+      <if test="blockTimestamp != null">
+        block_timestamp = #{blockTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where block_number = #{blockNumber,jdbcType=BIGINT}
+      and node_id = #{nodeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.platon.statistic.dao.entity.Node">
+    update node
+    set sign_count = #{signCount,jdbcType=BIGINT},
+      settle_epoch = #{settleEpoch,jdbcType=INTEGER},
+      consensus_epoch = #{consensusEpoch,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      stat_validator_time = #{statValidatorTime,jdbcType=INTEGER},
+      sign_rate = #{signRate,jdbcType=DOUBLE},
+      block_timestamp = #{blockTimestamp,jdbcType=BIGINT}
+    where block_number = #{blockNumber,jdbcType=BIGINT}
+      and node_id = #{nodeId,jdbcType=VARCHAR}
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    insert into node
+    (block_number, node_id, sign_count, settle_epoch, consensus_epoch, create_time, update_time, 
+      stat_validator_time, sign_rate, block_timestamp)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.blockNumber,jdbcType=BIGINT}, #{item.nodeId,jdbcType=VARCHAR}, #{item.signCount,jdbcType=BIGINT}, 
+        #{item.settleEpoch,jdbcType=INTEGER}, #{item.consensusEpoch,jdbcType=INTEGER}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.statValidatorTime,jdbcType=INTEGER}, 
+        #{item.signRate,jdbcType=DOUBLE}, #{item.blockTimestamp,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+      @project https://github.com/itfsw/mybatis-generator-plugin
+    -->
+    insert into node (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'block_number'.toString() == column.value">
+          #{item.blockNumber,jdbcType=BIGINT}
+        </if>
+        <if test="'node_id'.toString() == column.value">
+          #{item.nodeId,jdbcType=VARCHAR}
+        </if>
+        <if test="'sign_count'.toString() == column.value">
+          #{item.signCount,jdbcType=BIGINT}
+        </if>
+        <if test="'settle_epoch'.toString() == column.value">
+          #{item.settleEpoch,jdbcType=INTEGER}
+        </if>
+        <if test="'consensus_epoch'.toString() == column.value">
+          #{item.consensusEpoch,jdbcType=INTEGER}
+        </if>
+        <if test="'create_time'.toString() == column.value">
+          #{item.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'update_time'.toString() == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'stat_validator_time'.toString() == column.value">
+          #{item.statValidatorTime,jdbcType=INTEGER}
+        </if>
+        <if test="'sign_rate'.toString() == column.value">
+          #{item.signRate,jdbcType=DOUBLE}
+        </if>
+        <if test="'block_timestamp'.toString() == column.value">
+          #{item.blockTimestamp,jdbcType=BIGINT}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platon.statistic.dao.mapper.CustomNodeMapper">
+
+  <resultMap id="BaseResultMap" type="com.platon.statistic.bean.StatisticNode" extends="com.platon.statistic.dao.mapper.NodeMapper.BaseResultMap"/>
+
+  <!--查询最新的一批共识周期记录-->
+  <select id="selectLatestConsensusNode" resultMap="BaseResultMap">
+    SELECT
+    <if test="distinct">
+      DISTINCT
+    </if>
+    <include refid="com.platon.statistic.dao.mapper.NodeMapper.Base_Column_List" />
+    FROM node WHERE `consensus_epoch`=(SELECT MAX(consensus_epoch) FROM node)
+  </select>
+
+  <select id="selectMaxNumber" resultType="java.math.BigInteger">
+    select max(block_number) from node
+  </select>
+
+  <insert id="batchInsertOrUpdateSelective" parameterType="map">
+    replace into node (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'block_number'.toString() == column.value">
+          #{item.blockNumber,jdbcType=BIGINT}
+        </if>
+        <if test="'node_id'.toString() == column.value">
+          #{item.nodeId,jdbcType=VARCHAR}
+        </if>
+        <if test="'sign_count'.toString() == column.value">
+          #{item.signCount,jdbcType=BIGINT}
+        </if>
+        <if test="'settle_epoch'.toString() == column.value">
+          #{item.settleEpoch,jdbcType=INTEGER}
+        </if>
+        <if test="'consensus_epoch'.toString() == column.value">
+          #{item.consensusEpoch,jdbcType=INTEGER}
+        </if>
+        <if test="'create_time'.toString() == column.value">
+          #{item.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'update_time'.toString() == column.value">
+          #{item.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'stat_validator_time'.toString() == column.value">
+          #{item.statValidatorTime,jdbcType=INTEGER}
+        </if>
+        <if test="'sign_rate'.toString() == column.value">
+          #{item.signRate,jdbcType=DOUBLE}
+        </if>
+        <if test="'block_timestamp'.toString() == column.value">
+          #{item.blockTimestamp,jdbcType=BIGINT}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
+</mapper>
